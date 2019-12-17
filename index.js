@@ -1,5 +1,7 @@
 //require dependency, inquirer
 const inquirer = require("inquirer");
+//require the file
+const { easy, medium } = require("./generateHTML");//doesn't need js extension
 
 //create a getUserInput function
 function getUserInput(){
@@ -35,7 +37,9 @@ async function main(){
     // const response = await getUserInput();
     // console.log(response);
     const { username, color } = await getUserInput();
-    console.log(username, color);
+    //console.log(username, color);
+    //easy(username, color);
+    medium(username, color);
 }
 //calling a main function
 main();
