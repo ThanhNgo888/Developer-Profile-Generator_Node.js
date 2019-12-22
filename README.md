@@ -38,4 +38,6 @@ you should see this after installed
   }
 4. Buil HTML:
 generateHTML.js
+5. look for github API
+npm i anxios
 ======================================================================================================================

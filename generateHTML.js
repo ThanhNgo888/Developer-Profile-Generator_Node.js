@@ -1,12 +1,13 @@
 const fs = require('fs');
 const util = require('util');
+const ejs = require('ejs');
 
 const readFilePromise = util.promisify(fs.readFile);
 const writeFilePromise = util.promisify(fs.writeFile);
 
 const generateFileName = function(){
     //get current time
-    return `./${(new Date).getTime()}.html`;
+    return `./_${(new Date).getTime()}.html`;
 }
 
 const easy = async function(username, color){
@@ -29,12 +30,20 @@ const easy = async function(username, color){
     await writeFilePromise(generateFileName(), htmlString);
 }
 
-const medium = async function(username, color){
-    const template = await readFilePromise("./template.html", "utf-8");
-    console.log(template);
+const medium = async function(username, data){
+    const template = await readFilePromise("./template.ejs", "utf-8");
+    //console.log(template);
+    //console.log(username, data);
+    const htmlString = ejs.render(template, {
+        //username: username => is as same as easy because its key and value has the name
+        username, 
+        data
+    });
+    //console.log(htmlString);
+    await writeFilePromise(generateFileName(), htmlString);
 }
 module.exports = {
     //easy: easy => is as same as easy because its key and value has the name
     easy,
-    medium,
+    medium
 }
