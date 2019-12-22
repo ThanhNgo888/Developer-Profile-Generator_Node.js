@@ -1,13 +1,14 @@
 const fs = require('fs');
 const util = require('util');
 const ejs = require('ejs');
+const puppeteer = require('puppeteer');
 
 const readFilePromise = util.promisify(fs.readFile);
 const writeFilePromise = util.promisify(fs.writeFile);
 
-const generateFileName = function(){
+const generateFileName = function(fileExtension = 'html'){
     //get current time
-    return `./_${(new Date).getTime()}.html`;
+    return `./_${(new Date).getTime()}.${fileExtension}`;
 }
 
 const easy = async function(username, color){
@@ -41,6 +42,13 @@ const medium = async function(username, data){
     });
     //console.log(htmlString);
     await writeFilePromise(generateFileName(), htmlString);
+    //===========================================================================
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.setContent(htmlString);
+    await page.pdf({path: generateFileName('pdf'), format: 'A4'});
+
+    await browser.close();
 }
 module.exports = {
     //easy: easy => is as same as easy because its key and value has the name

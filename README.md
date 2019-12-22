@@ -41,3 +41,5 @@ generateHTML.js
 5. look for github API
 npm i anxios
 ======================================================================================================================
+install puppeteer => npm i puppeteer
+require puppeteer
